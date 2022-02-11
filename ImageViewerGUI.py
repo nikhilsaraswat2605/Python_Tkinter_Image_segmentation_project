@@ -1,6 +1,4 @@
 ####### REQUIRED IMPORTS FROM THE PREVIOUS ASSIGNMENT #######
-from socket import MsgFlag
-
 from matplotlib.pyplot import margins
 from my_package.model import InstanceSegmentationModel
 from my_package.data import Dataset
