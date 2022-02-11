@@ -2,9 +2,9 @@
 from socket import MsgFlag
 
 from matplotlib.pyplot import margins
-from my_package1.model import InstanceSegmentationModel
-from my_package1.data.dataset import Dataset
-from my_package1.analysis.visualize import plot_visualization
+from my_package.model import InstanceSegmentationModel
+from my_package.data import Dataset
+from my_package.analysis import plot_visualization
 from my_package.data.transforms import FlipImage, RescaleImage, BlurImage, CropImage, RotateImage
 
 
