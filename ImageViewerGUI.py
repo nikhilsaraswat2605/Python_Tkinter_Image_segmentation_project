@@ -66,7 +66,7 @@ def process(clicked, img_path):
         return
     image = Image.open(img_path["path"])
     # image.show()
-    resize = RescaleImage(800)
+    resize = RescaleImage(500)
     image = resize(image=image)
     photo = ImageTk.PhotoImage(image)
     image_label = Label(root, image=photo)
