@@ -12,6 +12,8 @@ from tkinter import ttk
 from tkinter import filedialog
 from PIL import Image, ImageTk
 import numpy as np
+import warnings
+warnings.filterwarnings("ignore")
 
 
 # Define the function you want to call when the filebrowser button is clicked.
@@ -68,6 +70,7 @@ def process(clicked, img_path):
     # image.show()
     resize = RescaleImage(500)
     image = resize(image=image)
+
     photo = ImageTk.PhotoImage(image)
     image_label = Label(root, image=photo)
     if clicked.get() == "Segmentation":

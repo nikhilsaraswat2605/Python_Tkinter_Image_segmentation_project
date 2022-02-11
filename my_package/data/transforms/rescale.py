@@ -32,7 +32,7 @@ class RescaleImage(object):
 
         width, height = image.size
         if type(self.output_size) is int:
-            if height > width:
+            if height < width:
                 self.final_height = self.output_size
                 self.final_width = int(width*(self.final_height/height))
             else:
@@ -41,5 +41,5 @@ class RescaleImage(object):
         else:
             self.final_height, self.final_width = self.output_size
 
-        resized_image = image.resize((self.final_height, self.final_width))
+        resized_image = image.resize((self.final_width, self.final_height))
         return resized_image
