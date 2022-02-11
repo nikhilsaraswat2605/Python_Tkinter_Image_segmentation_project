@@ -138,7 +138,7 @@ if __name__ == '__main__':
     ####### CODE REQUIRED (END) #######
 
     ####### CODE REQUIRED (START) #######
-    # Declare the drop-down button
+    # Declare the drop-down button 
 
     clicktypeDropDown = ttk.Combobox(
         root, width=27, values=options, textvariable=clicked, state="readonly")
