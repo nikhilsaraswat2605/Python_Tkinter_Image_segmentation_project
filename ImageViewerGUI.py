@@ -11,7 +11,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 from PIL import Image, ImageTk
-import numpy as np
+import numpy as np 
 import warnings
 warnings.filterwarnings("ignore")
 
