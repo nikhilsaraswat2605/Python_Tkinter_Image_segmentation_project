@@ -1,7 +1,4 @@
 ####### REQUIRED IMPORTS FROM THE PREVIOUS ASSIGNMENT #######
-from sys import maxsize
-
-from matplotlib import image
 from my_package.model import InstanceSegmentationModel
 from my_package.data import Dataset
 from my_package.analysis import plot_visualization
