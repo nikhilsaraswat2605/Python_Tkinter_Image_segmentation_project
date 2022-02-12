@@ -1,5 +1,7 @@
 ####### REQUIRED IMPORTS FROM THE PREVIOUS ASSIGNMENT #######
 from sys import maxsize
+
+from matplotlib import image
 from my_package.model import InstanceSegmentationModel
 from my_package.data import Dataset
 from my_package.analysis import plot_visualization
@@ -75,7 +77,7 @@ def process(clicked, img_path):
         msg.configure(font=("Arial Bold", 10),
                       text=f"No image is selected !")
         msg.grid(row=1, columnspan=5)
-        return        
+        return
 
     resize = RescaleImage(300)
     image = resize(image=image)
@@ -99,8 +101,8 @@ def process(clicked, img_path):
         image_label2 = Label(root, image=photo2)
         image_label.grid(row=2, column=0)
         image_label2.grid(row=2, column=1)
-    ####### CODE REQUIRED (END) #######
 
+       ####### CODE REQUIRED (END) #######
 
     # `main` function definition starts from here.
 if __name__ == '__main__':
@@ -131,9 +133,12 @@ if __name__ == '__main__':
     global e
     e = Entry(root, width=70)
     e.grid(row=0, column=0)
-    global Msg
+    global msg
     msg = Label(root, text="")
-
+    global image_label
+    image_label = Label(root, image=None)
+    global image_label2
+    image_label2 = Label(root, image=None)
 
     ####### CODE REQUIRED (START) #######
     # Declare the file browsing button
@@ -143,13 +148,11 @@ if __name__ == '__main__':
         fileClick, clicked, dataset, segmentor, img_path), padx=5)
     ####### CODE REQUIRED (END) #######
 
-
     ####### CODE REQUIRED (START) #######
     # Declare the drop-down button
     clicktypeDropDown = ttk.Combobox(
         root, width=27, values=options, textvariable=clicked, state="readonly")
     ####### CODE REQUIRED (END) #######
-
 
     # This is a `Process` button, check out the sample video to know about its functionality
     myButton = Button(root, text="Process",
@@ -157,7 +160,6 @@ if __name__ == '__main__':
     selectButton.grid(row=0, column=1)
     clicktypeDropDown.grid(row=0, column=2)
     myButton.grid(row=0, column=3)
-
 
     # CODE REQUIRED (START) ####### (1 line)
     # Execute with mainloop()
