@@ -1,4 +1,5 @@
 ####### REQUIRED IMPORTS FROM THE PREVIOUS ASSIGNMENT #######
+from sys import maxsize
 from my_package.model import InstanceSegmentationModel
 from my_package.data import Dataset
 from my_package.analysis import plot_visualization
@@ -58,23 +59,31 @@ def process(clicked, img_path):
     # Should show the corresponding segmentation or bounding boxes over the input image wrt the choice provided.
     # Note: this function will just show the output, which should have been already computed in the `fileClick` function above.
     # Note: also you should handle the case if the user clicks on the `Process` button without selecting any image file.
-    # print(img_path[0])
+
     global photo
     global photo2
+
     if img_path["path"] is None:
         msg.configure(font=("Arial Bold", 10),
                       text=f"No image is selected !")
         msg.grid(row=1, columnspan=5)
         return
-    image = Image.open(img_path["path"])
-    # image.show()
-    resize = RescaleImage(500)
+
+    try:
+        image = Image.open(img_path["path"])
+    except:
+        msg.configure(font=("Arial Bold", 10),
+                      text=f"No image is selected !")
+        msg.grid(row=1, columnspan=5)
+        return        
+
+    resize = RescaleImage(300)
     image = resize(image=image)
 
     photo = ImageTk.PhotoImage(image)
     image_label = Label(root, image=photo)
     if clicked.get() == "Segmentation":
-        # image.show()
+
         result_img_path = f"output/Seg.jpg"
         result_img = Image.open(result_img_path)
         result_img = resize(image=result_img)
@@ -92,6 +101,7 @@ def process(clicked, img_path):
         image_label2.grid(row=2, column=1)
     ####### CODE REQUIRED (END) #######
 
+
     # `main` function definition starts from here.
 if __name__ == '__main__':
 
@@ -99,13 +109,9 @@ if __name__ == '__main__':
     # Instantiate the root window.
     # Provide a title to the root window.
     root = Tk()
-    root.title("MY GUI")
+    root.title("ImageViewerGUI - Nikhil Saraswat 20CS10039")
     root.config(bg='#4A7A8C')
     root.geometry("800x40")
-    # sb = Scrollbar(
-    #     root,
-    #     orient=HORIZONTAL
-    # )
 
     ####### CODE REQUIRED (END) #######
 
@@ -128,31 +134,32 @@ if __name__ == '__main__':
     global Msg
     msg = Label(root, text="")
 
+
     ####### CODE REQUIRED (START) #######
     # Declare the file browsing button
-
     img_path = {}
     img_path["path"] = None
     selectButton = Button(text='...', command=partial(
-        fileClick, clicked, dataset, segmentor, img_path), padx=2, pady=2)
+        fileClick, clicked, dataset, segmentor, img_path), padx=5)
     ####### CODE REQUIRED (END) #######
 
-    ####### CODE REQUIRED (START) #######
-    # Declare the drop-down button 
 
+    ####### CODE REQUIRED (START) #######
+    # Declare the drop-down button
     clicktypeDropDown = ttk.Combobox(
         root, width=27, values=options, textvariable=clicked, state="readonly")
     ####### CODE REQUIRED (END) #######
 
+
     # This is a `Process` button, check out the sample video to know about its functionality
     myButton = Button(root, text="Process",
-                      command=partial(process, clicked, img_path), padx=2, pady=2)
+                      command=partial(process, clicked, img_path), padx=2)
     selectButton.grid(row=0, column=1)
     clicktypeDropDown.grid(row=0, column=2)
     myButton.grid(row=0, column=3)
-    # sb.grid(row=5, columnspan=10, sticky=EW)
+
+
     # CODE REQUIRED (START) ####### (1 line)
     # Execute with mainloop()
     root.mainloop()
-
     ####### CODE REQUIRED (END) #######
