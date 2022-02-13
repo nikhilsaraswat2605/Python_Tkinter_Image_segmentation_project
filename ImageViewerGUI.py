@@ -43,7 +43,7 @@ def fileClick(clicked, dataset, segmentor, img_path):
     print("done!")
     msg.configure(font=("Arial Bold", 10),
                   text=f"""{img_path["path"]} - image is selected !""")
-    msg.grid(row=1, columnspan=5)
+    msg.place(x=25, y=25)
     e.delete(0, 'end')
     e.insert(0, f"""{img_path["path"]} - image is selected !""")
     ####### CODE REQUIRED (END) #######
@@ -83,6 +83,7 @@ def process(clicked, img_path):
 
     photo = ImageTk.PhotoImage(image)
     image_label = Label(root, image=photo)
+
     if clicked.get() == "Segmentation":
 
         result_img_path = f"output/_Segmented.jpg"
@@ -90,17 +91,20 @@ def process(clicked, img_path):
         result_img = resize(image=result_img)
         photo2 = ImageTk.PhotoImage(result_img)
         image_label2 = Label(root, image=photo2)
-        image_label.grid(row=2, column=0)
-        image_label2.grid(row=2, column=1)
+        # image_label.grid(row=2, column=0)
+        # image_label2.grid(row=2, column=1)
+        image_label.place(x=50, y=50)
+        image_label2.place(x=width+150, y=50)
     else:
         result_img_path = f"output/_Bounding_boxed.jpg"
         result_img = Image.open(result_img_path)
         result_img = resize(image=result_img)
         photo2 = ImageTk.PhotoImage(result_img)
         image_label2 = Label(root, image=photo2)
-        image_label.grid(row=2, column=0)
-        image_label2.grid(row=2, column=1)
-
+        # image_label.grid(row=2, column=0)
+        # image_label2.grid(row=2, column=1)
+        image_label.place(x=50, y=50)
+        image_label2.place(x=width+150, y=50)
        ####### CODE REQUIRED (END) #######
 
     # `main` function definition starts from here.
@@ -111,7 +115,7 @@ if __name__ == '__main__':
     # Provide a title to the root window.
     root = Tk()
     root.title("ImageViewerGUI - Nikhil Saraswat 20CS10039")
-    root.config(bg='#4A7A8C')
+    # root.config(bg='#4A7A8C')
     root.geometry("800x40")
 
     ####### CODE REQUIRED (END) #######
