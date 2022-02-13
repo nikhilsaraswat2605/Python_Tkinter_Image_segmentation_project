@@ -35,7 +35,7 @@ def plot_visualization(image, seg_store, outputs):
         image = image * (mask < 0.5).astype(int) + (mask >= 0.5).astype(int) * \
                 tuple(rgb) + image * (mask > 0.5).astype(int)*0.35
     # converting the numpy array of image into PIL image
-    img_path = f"{outputs}Seg.jpg"
+    img_path = f"{outputs}_Segmented.jpg"
     PILimg = Image.fromarray(np.uint8((image*255)))
     PILimg.save(img_path)
     # iterating over predicted boundry boxes for particular image
@@ -61,5 +61,5 @@ def plot_visualization(image, seg_store, outputs):
         # here we are writing text on the image using opencv module we are using HERSHEY_DUPLEX font and 0.5 font size
         PILimg = Image.fromarray(cv2.putText(np.array(PILimg), text, list(map(
             int, [x1, y1-10])), cv2.FONT_HERSHEY_SIMPLEX, fontScale=.5, color=(0, 0, 0), lineType=cv2.LINE_AA))
-    img_path = f"{outputs}BB.jpg"
+    img_path = f"{outputs}_Bounding_boxed.jpg"
     PILimg.save(img_path)

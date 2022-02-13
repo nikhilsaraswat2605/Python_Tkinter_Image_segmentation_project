@@ -78,14 +78,14 @@ def process(clicked, img_path):
 
     width, height = image.size
 
-    resize = RescaleImage(650)
+    resize = RescaleImage(600)
     image = resize(image=image)
 
     photo = ImageTk.PhotoImage(image)
     image_label = Label(root, image=photo)
     if clicked.get() == "Segmentation":
 
-        result_img_path = f"output/Seg.jpg"
+        result_img_path = f"output/_Segmented.jpg"
         result_img = Image.open(result_img_path)
         result_img = resize(image=result_img)
         photo2 = ImageTk.PhotoImage(result_img)
@@ -93,7 +93,7 @@ def process(clicked, img_path):
         image_label.grid(row=2, column=0)
         image_label2.grid(row=2, column=1)
     else:
-        result_img_path = f"output/BB.jpg"
+        result_img_path = f"output/_Bounding_boxed.jpg"
         result_img = Image.open(result_img_path)
         result_img = resize(image=result_img)
         photo2 = ImageTk.PhotoImage(result_img)
