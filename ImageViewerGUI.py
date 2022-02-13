@@ -2,7 +2,7 @@
 from my_package.model import InstanceSegmentationModel
 from my_package.data import Dataset
 from my_package.analysis import plot_visualization
-from my_package.data.transforms import FlipImage, RescaleImage, BlurImage, CropImage, RotateImage
+from my_package.data.transforms import FlipImage, RescaleImage, BlurImage, CropImage, RotateImage, rescale
 
 
 ####### ADD THE ADDITIONAL IMPORTS FOR THIS ASSIGNMENT HERE #######
@@ -11,7 +11,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 from PIL import Image, ImageTk
-import numpy as np 
+import numpy as np
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -76,7 +76,9 @@ def process(clicked, img_path):
         msg.grid(row=1, columnspan=5)
         return
 
-    resize = RescaleImage(300)
+    width, height = image.size
+
+    resize = RescaleImage(650)
     image = resize(image=image)
 
     photo = ImageTk.PhotoImage(image)
