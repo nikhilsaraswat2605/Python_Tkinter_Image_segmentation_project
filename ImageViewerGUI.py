@@ -26,7 +26,7 @@ def fileClick(clicked, dataset, segmentor, img_path):
     # Once the output is computed it should be shown automatically based on choice the dropdown button is at.
     # To have a better clarity, please check out the sample video.
     filepath = filedialog.askopenfilename(filetypes=[(
-        'Jpg Files', '*.jpg'), ('png Files', '*.png'), ('jpeg Files', '*.jpeg')])
+        'Jpg Files', '*.jpg'), ('png Files', '*.png'), ('jpeg Files', '*.jpeg')], initialdir="data/imgs/")
 
     print(filepath)
     # try to open the path otherwise print an error message that no iage is selected
