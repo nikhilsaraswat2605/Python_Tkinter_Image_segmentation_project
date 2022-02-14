@@ -17,6 +17,7 @@ from warnings import filterwarnings
 filterwarnings("ignore")
 # Define the function you want to call when the filebrowser button is clicked.
 
+
 def fileClick(clicked, dataset, segmentor, img_path):
     ####### CODE REQUIRED (START) #######
     # This function should pop-up a dialog for the user to select an input image file.
@@ -26,10 +27,19 @@ def fileClick(clicked, dataset, segmentor, img_path):
     # To have a better clarity, please check out the sample video.
     filepath = filedialog.askopenfilename(filetypes=[(
         'Jpg Files', '*.jpg'), ('png Files', '*.png'), ('jpeg Files', '*.jpeg')])
+
     print(filepath)
+    # try to open the path otherwise print an error message that no iage is selected
+    try:
+        PILimage = Image.open(filepath)
+    except Exception as err:
+        print("******************* ", err, " *******************")
+        msg.configure(font=("Arial Bold", 10),
+                      text=f"No image is selected !")
+        msg.place(x=80, y=25)
+        return
     img_path["path"] = filepath
     my_data = dataset
-    PILimage = Image.open(filepath)
     # scaling the image between [0,1]
     image = np.array(PILimage)/255
     # rolling the axis of image to bring it from (H,W,3) to (3,H,W)
@@ -59,56 +69,55 @@ def process(clicked, img_path):
 
     global photo
     global photo2
-
+    # if no image is selected then print an error message that no iage is selected
     if img_path["path"] is None:
         msg.configure(font=("Arial Bold", 10),
                       text=f"No image is selected !")
         msg.place(x=80, y=25)
         return
-
+    # try to open the path otherwise print an error message that no iage is selected
     try:
         image = Image.open(img_path["path"])
-    except:
+    except Exception as err:
+        print("******************* ", err, " *******************")
         msg.configure(font=("Arial Bold", 10),
                       text=f"No image is selected !")
         msg.place(x=80, y=25)
         return
-
-    resize = RescaleImage(600)
-    image = resize(image=image)
-    width, height = image.size
+    resize = RescaleImage(600)  # create an instance of the RescaleImage class
+    image = resize(image=image)  # rescale the image
+    width, height = image.size  # get width and height of the image
 
     photo = ImageTk.PhotoImage(image)
     image_label = Label(root, image=photo)
 
-    if clicked.get() == "Segmentation":
+    if clicked.get() == "Segmentation":  # segmention is clicked then get the segmentted image from the output folder and make lable of that image and place them in the root window
         result_img_path = f"output/_Segmented.jpg"
         result_img = Image.open(result_img_path)
         result_img = resize(image=result_img)
         photo2 = ImageTk.PhotoImage(result_img)
-        image_label2 = Label(root, image=photo2)
+        result_img_label = Label(root, image=photo2)
         image_label.place(x=50, y=50)
-        image_label2.place(x=width+150, y=50)
-    else:
+        result_img_label.place(x=width+150, y=50)
+    else:  # segmention is clicked then get the segmentted image from the output folder and make lable of that image and place them in the root window
         result_img_path = f"output/_Bounding_boxed.jpg"
         result_img = Image.open(result_img_path)
         result_img = resize(image=result_img)
         photo2 = ImageTk.PhotoImage(result_img)
-        image_label2 = Label(root, image=photo2)
+        result_img_label = Label(root, image=photo2)
         image_label.place(x=50, y=50)
-        image_label2.place(x=width+150, y=50)
+        result_img_label.place(x=width+150, y=50)
        ####### CODE REQUIRED (END) #######
-
 
     # `main` function definition starts from here.
 if __name__ == '__main__':
     # CODE REQUIRED (START) ####### (2 lines)
     # Instantiate the root window.
     # Provide a title to the root window.
+    global root
     root = Tk()
     root.title("ImageViewerGUI - Nikhil Saraswat 20CS10039")
     root.geometry("800x45")
-
     ####### CODE REQUIRED (END) #######
 
     # Setting up the segmentor model.
@@ -132,7 +141,7 @@ if __name__ == '__main__':
     global image_label
     image_label = Label(root, image=None)
     global image_label2
-    image_label2 = Label(root, image=None)
+    result_img_label = Label(root, image=None)
 
     ####### CODE REQUIRED (START) #######
     # Declare the file browsing button
