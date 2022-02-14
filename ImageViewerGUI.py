@@ -6,10 +6,9 @@ from my_package.data.transforms import FlipImage, RescaleImage, BlurImage, CropI
 
 
 ####### ADD THE ADDITIONAL IMPORTS FOR THIS ASSIGNMENT HERE #######
+from os import path
 from functools import partial
-from tkinter import *
-from tkinter import ttk
-from tkinter import filedialog
+from tkinter import Label, Tk, Entry, StringVar, Button, LEFT, ttk, filedialog
 from PIL import Image, ImageTk
 import numpy as np
 import warnings
@@ -27,12 +26,12 @@ def fileClick(clicked, dataset, segmentor, img_path):
     # Hint: Call the segmentor from here, then compute the output images from using the `plot_visualization` function and save it as an image.
     # Once the output is computed it should be shown automatically based on choice the dropdown button is at.
     # To have a better clarity, please check out the sample video.
-    name = filedialog.askopenfilename(filetypes=[(
+    filepath = filedialog.askopenfilename(filetypes=[(
         'Jpg Files', '*.jpg'), ('png Files', '*.png'), ('jpeg Files', '*.jpeg')])
-    print(name)
-    img_path["path"] = name
-    # print(img_path)
-    PILimage = Image.open(name)
+    print(filepath)
+    img_path["path"] = filepath
+    my_data = dataset
+    PILimage = Image.open(filepath)
     # scaling the image between [0,1]
     image = np.array(PILimage)/255
     # rolling the axis of image to bring it from (H,W,3) to (3,H,W)
@@ -42,7 +41,7 @@ def fileClick(clicked, dataset, segmentor, img_path):
     plot_visualization(image, seg_store, "output/")
     print("done!")
     msg.configure(font=("Arial Bold", 10),
-                  text=f"""{img_path["path"]} - image is selected !""")
+                  text=f"""{path.basename(img_path["path"])} - image is selected !""")
     msg.place(x=25, y=25)
     e.delete(0, 'end')
     e.insert(0, f"""{img_path["path"]} - image is selected !""")
@@ -85,7 +84,6 @@ def process(clicked, img_path):
     image_label = Label(root, image=photo)
 
     if clicked.get() == "Segmentation":
-
         result_img_path = f"output/_Segmented.jpg"
         result_img = Image.open(result_img_path)
         result_img = resize(image=result_img)
@@ -99,7 +97,6 @@ def process(clicked, img_path):
         result_img = resize(image=result_img)
         photo2 = ImageTk.PhotoImage(result_img)
         image_label2 = Label(root, image=photo2)
-
         image_label.place(x=50, y=50)
         image_label2.place(x=width+150, y=50)
        ####### CODE REQUIRED (END) #######
@@ -135,7 +132,7 @@ if __name__ == '__main__':
     e = Entry(root, width=70)
     e.grid(row=0, column=0)
     global msg
-    msg = Label(root, text="")
+    msg = Label(root, text="", justify=LEFT)
     global image_label
     image_label = Label(root, image=None)
     global image_label2
