@@ -46,6 +46,7 @@ def fileClick(clicked, dataset, segmentor, img_path):
     msg.place(x=25, y=25)
     e.delete(0, 'end')
     e.insert(0, f"""{img_path["path"]} - image is selected !""")
+    process(clicked=clicked, img_path=img_path)
     ####### CODE REQUIRED (END) #######
 
     # `process` function definition starts from here.
@@ -76,10 +77,9 @@ def process(clicked, img_path):
         msg.grid(row=1, columnspan=5)
         return
 
-    width, height = image.size
-
     resize = RescaleImage(600)
     image = resize(image=image)
+    width, height = image.size
 
     photo = ImageTk.PhotoImage(image)
     image_label = Label(root, image=photo)
@@ -91,8 +91,6 @@ def process(clicked, img_path):
         result_img = resize(image=result_img)
         photo2 = ImageTk.PhotoImage(result_img)
         image_label2 = Label(root, image=photo2)
-        # image_label.grid(row=2, column=0)
-        # image_label2.grid(row=2, column=1)
         image_label.place(x=50, y=50)
         image_label2.place(x=width+150, y=50)
     else:
@@ -101,11 +99,11 @@ def process(clicked, img_path):
         result_img = resize(image=result_img)
         photo2 = ImageTk.PhotoImage(result_img)
         image_label2 = Label(root, image=photo2)
-        # image_label.grid(row=2, column=0)
-        # image_label2.grid(row=2, column=1)
+
         image_label.place(x=50, y=50)
         image_label2.place(x=width+150, y=50)
        ####### CODE REQUIRED (END) #######
+
 
     # `main` function definition starts from here.
 if __name__ == '__main__':
