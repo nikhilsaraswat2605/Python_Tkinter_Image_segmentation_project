@@ -1,25 +1,23 @@
 ####### REQUIRED IMPORTS FROM THE PREVIOUS ASSIGNMENT #######
-from my_package.model import InstanceSegmentationModel
-from my_package.data import Dataset
 from my_package.analysis import plot_visualization
+from my_package.data import Dataset
+from my_package.model import InstanceSegmentationModel
 from my_package.data.transforms import FlipImage, RescaleImage, BlurImage, CropImage, RotateImage, rescale
 
 
 ####### ADD THE ADDITIONAL IMPORTS FOR THIS ASSIGNMENT HERE #######
 from os import path
-from functools import partial
+import numpy as np
 from tkinter import Label, Tk, Entry, StringVar, Button, LEFT, ttk, filedialog
 from PIL import Image, ImageTk
-import numpy as np
-import warnings
-warnings.filterwarnings("ignore")
+from functools import partial
+from warnings import filterwarnings
 
 
+filterwarnings("ignore")
 # Define the function you want to call when the filebrowser button is clicked.
 
-
 def fileClick(clicked, dataset, segmentor, img_path):
-
     ####### CODE REQUIRED (START) #######
     # This function should pop-up a dialog for the user to select an input image file.
     # Once the image is selected by the user, it should automatically get the corresponding outputs from the segmentor.
@@ -42,7 +40,7 @@ def fileClick(clicked, dataset, segmentor, img_path):
     print("done!")
     msg.configure(font=("Arial Bold", 10),
                   text=f"""{path.basename(img_path["path"])} - image is selected !""")
-    msg.place(x=25, y=25)
+    msg.place(x=80, y=25)
     e.delete(0, 'end')
     e.insert(0, f"""{img_path["path"]} - image is selected !""")
     process(clicked=clicked, img_path=img_path)
@@ -65,7 +63,7 @@ def process(clicked, img_path):
     if img_path["path"] is None:
         msg.configure(font=("Arial Bold", 10),
                       text=f"No image is selected !")
-        msg.grid(row=1, columnspan=5)
+        msg.place(x=80, y=25)
         return
 
     try:
@@ -73,7 +71,7 @@ def process(clicked, img_path):
     except:
         msg.configure(font=("Arial Bold", 10),
                       text=f"No image is selected !")
-        msg.grid(row=1, columnspan=5)
+        msg.place(x=80, y=25)
         return
 
     resize = RescaleImage(600)
@@ -104,14 +102,12 @@ def process(clicked, img_path):
 
     # `main` function definition starts from here.
 if __name__ == '__main__':
-
     # CODE REQUIRED (START) ####### (2 lines)
     # Instantiate the root window.
     # Provide a title to the root window.
     root = Tk()
     root.title("ImageViewerGUI - Nikhil Saraswat 20CS10039")
-    # root.config(bg='#4A7A8C')
-    root.geometry("800x40")
+    root.geometry("800x45")
 
     ####### CODE REQUIRED (END) #######
 
