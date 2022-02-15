@@ -37,7 +37,7 @@ def fileClick(clicked, dataset, segmentor, img_path):
     except Exception as err:
         print("******************* ", err, " *******************")
         msg.configure(font=("Arial Bold", 10), text='No image is selected !')
-        msg.place(x=80, y=50)
+        msg.place(x=80, y=25)
         return
     img_path["path"] = filepath
     my_data = dataset
@@ -50,7 +50,7 @@ def fileClick(clicked, dataset, segmentor, img_path):
     print("done!")
     msg.configure(font=("Arial Bold", 10),
                   text=f"""{path.basename(img_path["path"])} - image is selected !""")
-    msg.place(x=80, y=50)
+    msg.place(x=80, y=25)
     e.delete(0, 'end')
     e.insert(0, f"""{img_path["path"]} - image is selected !""")
     process(clicked=clicked, img_path=img_path)
@@ -75,9 +75,9 @@ def process(clicked, img_path):
     except Exception as err:
         print('******************* ', err, ' *******************')
         msg.configure(font=('Arial Bold', 10), text='No image is selected !')
-        msg.place(x=80, y=50)
+        msg.place(x=80, y=25)
         return
-    resize = RescaleImage(1000)  # create an instance of the RescaleImage class
+    resize = RescaleImage(650)  # create an instance of the RescaleImage class
     image = resize(image=image)  # rescale the image
     width, height = image.size  # get width and height of the image
 
@@ -86,21 +86,17 @@ def process(clicked, img_path):
 
     if clicked.get() == "Segmentation":  # segmention is clicked then get the segmentted image from the output folder and make lable of that image and place them in the root window
         result_img_path = 'output/_Segmented.jpg'
-        result_img = Image.open(result_img_path)
-        result_img = resize(image=result_img)
-        photo2 = ImageTk.PhotoImage(result_img)
-        result_img_label = Label(root, image=photo2)
-        image_label.place(x=50, y=100)
-        result_img_label.place(x=width+150, y=100)
     else:  # segmention is clicked then get the segmentted image from the output folder and make lable of that image and place them in the root window
         result_img_path = 'output/_Bounding_boxed.jpg'
-        result_img = Image.open(result_img_path)
-        result_img = resize(image=result_img)
-        photo2 = ImageTk.PhotoImage(result_img)
-        result_img_label = Label(root, image=photo2)
-        image_label.place(x=50, y=50)
-        result_img_label.place(x=width+150, y=50)
-       ####### CODE REQUIRED (END) #######
+
+    result_img = Image.open(result_img_path)
+    result_img = resize(image=result_img)
+    photo2 = ImageTk.PhotoImage(result_img)
+    result_img_label = Label(root, image=photo2)
+    image_label.place(x=50, y=50)
+    result_img_label.place(x=width+150, y=50)
+    ####### CODE REQUIRED (END) #######
+
 
     # `main` function definition starts from here.
 if __name__ == '__main__':
@@ -111,7 +107,7 @@ if __name__ == '__main__':
     root = Tk()
     root.title("ImageViewerGUI - Nikhil Saraswat 20CS10039")
     root.geometry("800x45")
-    root.resizable(width=True, height=True)
+    # root.resizable(width=True, height=True)
     ####### CODE REQUIRED (END) #######
 
     # Setting up the segmentor model.
