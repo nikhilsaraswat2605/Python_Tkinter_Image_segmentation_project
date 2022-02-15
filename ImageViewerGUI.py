@@ -8,7 +8,7 @@ from my_package.data.transforms import FlipImage, RescaleImage, BlurImage, CropI
 ####### ADD THE ADDITIONAL IMPORTS FOR THIS ASSIGNMENT HERE #######
 from os import path
 import numpy as np
-from tkinter import Label, Tk, Entry, StringVar, Button, LEFT, ttk, filedialog
+from tkinter import CENTER, Label, Tk, Entry, StringVar, Button, LEFT, ttk, filedialog
 from PIL import Image, ImageTk
 from functools import partial
 from warnings import filterwarnings
@@ -34,9 +34,8 @@ def fileClick(clicked, dataset, segmentor, img_path):
         PILimage = Image.open(filepath)
     except Exception as err:
         print("******************* ", err, " *******************")
-        msg.configure(font=("Arial Bold", 10),
-                      text=f"No image is selected !")
-        msg.place(x=80, y=25)
+        msg.configure(font=("Arial Bold", 10), text='No image is selected !')
+        msg.place(x=80, y=50)
         return
     img_path["path"] = filepath
     my_data = dataset
@@ -44,13 +43,12 @@ def fileClick(clicked, dataset, segmentor, img_path):
     image = np.array(PILimage)/255
     # rolling the axis of image to bring it from (H,W,3) to (3,H,W)
     image = np.rollaxis(image, 2, 0)
-    seg_store = []
-    seg_store.append(segmentor(input=image))
+    seg_store = [segmentor(input=image)]
     plot_visualization(image, seg_store, "output/")
     print("done!")
     msg.configure(font=("Arial Bold", 10),
                   text=f"""{path.basename(img_path["path"])} - image is selected !""")
-    msg.place(x=80, y=25)
+    msg.place(x=80, y=50)
     e.delete(0, 'end')
     e.insert(0, f"""{img_path["path"]} - image is selected !""")
     process(clicked=clicked, img_path=img_path)
@@ -69,22 +67,15 @@ def process(clicked, img_path):
 
     global photo
     global photo2
-    # if no image is selected then print an error message that no iage is selected
-    if img_path["path"] is None:
-        msg.configure(font=("Arial Bold", 10),
-                      text=f"No image is selected !")
-        msg.place(x=80, y=25)
-        return
     # try to open the path otherwise print an error message that no iage is selected
     try:
         image = Image.open(img_path["path"])
     except Exception as err:
-        print("******************* ", err, " *******************")
-        msg.configure(font=("Arial Bold", 10),
-                      text=f"No image is selected !")
-        msg.place(x=80, y=25)
+        print('******************* ', err, ' *******************')
+        msg.configure(font=('Arial Bold', 10), text='No image is selected !')
+        msg.place(x=80, y=50)
         return
-    resize = RescaleImage(600)  # create an instance of the RescaleImage class
+    resize = RescaleImage(1000)  # create an instance of the RescaleImage class
     image = resize(image=image)  # rescale the image
     width, height = image.size  # get width and height of the image
 
@@ -92,15 +83,15 @@ def process(clicked, img_path):
     image_label = Label(root, image=photo)
 
     if clicked.get() == "Segmentation":  # segmention is clicked then get the segmentted image from the output folder and make lable of that image and place them in the root window
-        result_img_path = f"output/_Segmented.jpg"
+        result_img_path = 'output/_Segmented.jpg'
         result_img = Image.open(result_img_path)
         result_img = resize(image=result_img)
         photo2 = ImageTk.PhotoImage(result_img)
         result_img_label = Label(root, image=photo2)
-        image_label.place(x=50, y=50)
-        result_img_label.place(x=width+150, y=50)
+        image_label.place(x=50, y=100)
+        result_img_label.place(x=width+150, y=100)
     else:  # segmention is clicked then get the segmentted image from the output folder and make lable of that image and place them in the root window
-        result_img_path = f"output/_Bounding_boxed.jpg"
+        result_img_path = 'output/_Bounding_boxed.jpg'
         result_img = Image.open(result_img_path)
         result_img = resize(image=result_img)
         photo2 = ImageTk.PhotoImage(result_img)
@@ -123,7 +114,6 @@ if __name__ == '__main__':
     # Setting up the segmentor model.
     annotation_file = './data/annotations.jsonl'
     transforms = []
-
     # Instantiate the segmentor model.
     segmentor = InstanceSegmentationModel()
     # Instantiate the dataset.
@@ -137,7 +127,7 @@ if __name__ == '__main__':
     e = Entry(root, width=70)
     e.grid(row=0, column=0)
     global msg
-    msg = Label(root, text="", justify=LEFT)
+    msg = Label(root, text="", justify=CENTER)
     global image_label
     image_label = Label(root, image=None)
     global image_label2
@@ -145,8 +135,7 @@ if __name__ == '__main__':
 
     ####### CODE REQUIRED (START) #######
     # Declare the file browsing button
-    img_path = {}
-    img_path["path"] = None
+    img_path = {'path': None}
     selectButton = Button(text='...', command=partial(
         fileClick, clicked, dataset, segmentor, img_path), padx=5)
     ####### CODE REQUIRED (END) #######
