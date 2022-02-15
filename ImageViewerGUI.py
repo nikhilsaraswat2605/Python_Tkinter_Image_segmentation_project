@@ -25,7 +25,7 @@ def fileClick(clicked, dataset, segmentor, img_path):
     # Once the output is computed it should be shown automatically based on choice the dropdown button is at.
     # To have a better clarity, please check out the sample video.
     filepath = filedialog.askopenfilename(filetypes=[(
-        'Jpg Files', '*.jpg'), ('png Files', '*.png'), ('jpeg Files', '*.jpeg')], initialdir="data/imgs/")
+        'Jpg Files', '*.jpg'), ('jpeg Files', '*.jpeg')], initialdir="data/imgs/")
 
     print(filepath)
     # try to open the path otherwise print an error message that no iage is selected
@@ -91,9 +91,8 @@ def process(clicked, img_path):
     photo2 = ImageTk.PhotoImage(result_img)
     result_img_label = Label(root, image=photo2)
     image_label.place(x=50, y=50)
-    result_img_label.place(x=width+150, y=50)
+    result_img_label.place(x=width+100, y=50)
     ####### CODE REQUIRED (END) #######
-
 
     # `main` function definition starts from here.
 if __name__ == '__main__':
