@@ -13,6 +13,8 @@ from PIL import Image, ImageTk
 from functools import partial
 from warnings import filterwarnings
 
+from sqlalchemy import true
+
 
 filterwarnings("ignore")
 # Define the function you want to call when the filebrowser button is clicked.
@@ -109,6 +111,7 @@ if __name__ == '__main__':
     root = Tk()
     root.title("ImageViewerGUI - Nikhil Saraswat 20CS10039")
     root.geometry("800x45")
+    root.resizable(width=True, height=True)
     ####### CODE REQUIRED (END) #######
 
     # Setting up the segmentor model.
