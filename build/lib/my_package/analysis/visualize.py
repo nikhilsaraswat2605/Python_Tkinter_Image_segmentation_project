@@ -12,7 +12,7 @@ def plot_visualization(image, seg_store, outputs):
     # The function should plot the predicted segmentation maps and the bounding boxes on the images and save them.
     # Tip: keep the dimensions of the output image less than 800 to avoid RAM crashes.
 
-    # since there is only one image so find masks for only first image 
+    # since there is only one image so find masks for only first image
     pred_masks = seg_store[0][1]  # list of masks of the image
     # rolling the axis of image to bring it from (3,H,W) to (H,W,3)
     image = np.rollaxis(image, 0, 3)
@@ -30,7 +30,7 @@ def plot_visualization(image, seg_store, outputs):
         # here we are using concept of inclusion-exclusion for coloring and making the masks transparent
         # we are substracting the part of image at the place of mask then adding the same part of image with lower intensity + more intesity of color
         image = image * (mask < 0.5).astype(int) + (mask >= 0.5).astype(int) * \
-                tuple(rgb) + image * (mask > 0.5).astype(int)*0.35
+            tuple(rgb) + image * (mask > 0.5).astype(int)*0.35
     # converting the numpy array of image into PIL image
     PILimg = Image.fromarray(np.uint8((image*255)))
     img_path = f"{outputs}_Segmented.jpg"

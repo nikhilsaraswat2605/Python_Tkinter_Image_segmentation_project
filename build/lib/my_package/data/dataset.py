@@ -54,19 +54,17 @@ class Dataset(object):
             4. Perform the desired transformations on the image.
             5. Return the dictionary of the transformed image and annotations as specified.
         '''
-        # creating result  dictionary to return
-        result = {}
         # image path
-        ImagePath = 'data/'+self.data[idx]["img_fn"]
+        ImagePath = f'data/{self.data[idx]["img_fn"]}'
         # path of the segmented gray scale image
-        gt_png_ann_path = 'data/'+self.data[idx]["png_ann_fn"]
+        gt_png_ann_path = f'data/{self.data[idx]["png_ann_fn"]}'
 
         # opening images as PIL image
         Img = Image.open(ImagePath)
         gt_png_ann_Img = Image.open(gt_png_ann_path)
 
         # if transforms are not None, then iterate over all transformations class objects
-        if not self.transforms == None:
+        if self.transforms is not None:
             for transform_instance in self.transforms:
                 Img = transform_instance.__call__(Img)
 
@@ -80,10 +78,8 @@ class Dataset(object):
         gt_png_ann = np.rollaxis(
             gt_png_ann.reshape(*(gt_png_ann.shape), 1), 2, 0)
 
-        result["image"] = image
-        result["gt_png_ann"] = gt_png_ann
-        result["gt_bboxes"] = []
-
+        # creating result  dictionary to return
+        result = {'image': image, 'gt_png_ann': gt_png_ann, 'gt_bboxes': []}
         for item in self.data[idx]["bboxes"]:
             result["gt_bboxes"].append([item["category"]]+item["bbox"])
         result["gt_bboxes"] = np.array(result["gt_bboxes"])

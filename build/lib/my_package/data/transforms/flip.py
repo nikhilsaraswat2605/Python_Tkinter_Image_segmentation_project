@@ -27,9 +27,7 @@ class FlipImage(object):
         # Write your code here
         if self.flip_type == 'horizontal':
             # Do a flip of left and right (horizontal)
-            hori_flippedImage = image.transpose(Image.FLIP_LEFT_RIGHT)
-            return hori_flippedImage
+            return image.transpose(Image.FLIP_LEFT_RIGHT)
         else:
-            # Do a flip of top and bottom (verticle)
-            Vert_flippedImage = image.transpose(Image.FLIP_TOP_BOTTOM)
-            return Vert_flippedImage
+            # Do a flip of left and right (horizontal)
+            return image.transpose(Image.FLIP_TOP_BOTTOM)

@@ -41,5 +41,4 @@ class RescaleImage(object):
         else:
             self.final_height, self.final_width = self.output_size
 
-        resized_image = image.resize((self.final_width, self.final_height))
-        return resized_image
+        return image.resize((self.final_width, self.final_height))

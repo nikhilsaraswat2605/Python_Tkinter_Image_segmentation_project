@@ -1,5 +1,6 @@
-#Imports
+# Imports
 from PIL import Image, ImageFilter
+
 
 class BlurImage(object):
     '''
@@ -23,8 +24,5 @@ class BlurImage(object):
             Returns:
             image (numpy array or PIL Image)
         '''
-
         # Write your code here
-        blurred_image = image.filter(ImageFilter.GaussianBlur(self.radius))
-        return blurred_image
-
+        return image.filter(ImageFilter.GaussianBlur(self.radius))

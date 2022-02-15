@@ -33,24 +33,20 @@ class CropImage(object):
         if self.new_height > height or self.new_width > width:
             print("Can't crop, because crop size is more than original Image!")
             return image
-
+        # Crop the center of the image
         if self.crop_type == 'center':
             left = (width - self.new_width)/2
             top = (height - self.new_height)/2
             right = (width + self.new_width)/2
             bottom = (height + self.new_height)/2
 
-            # Crop the center of the image
-            image = image.crop((left, top, right, bottom))
-
-            return image
-
         else:
             left = random.randint(self.new_width/2, width-self.new_width/2)
             top = random.randint(self.new_height/2, height-self.new_height/2)
             right = left+self.new_width
             bottom = top+self.new_height
-            # Random crop
-            image = image.crop((left, top, right, bottom))
 
-            return image
+        # Crop the center of the image
+        image = image.crop((left, top, right, bottom))
+
+        return image
