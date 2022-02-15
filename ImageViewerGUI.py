@@ -107,7 +107,7 @@ if __name__ == '__main__':
     root = Tk()
     root.title("ImageViewerGUI - Nikhil Saraswat 20CS10039")
     root.geometry("800x45")
-    # root.resizable(width=True, height=True)
+    root.minsize(width=800, height=45)
     ####### CODE REQUIRED (END) #######
 
     # Setting up the segmentor model.
