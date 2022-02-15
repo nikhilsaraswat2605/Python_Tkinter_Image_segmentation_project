@@ -65,7 +65,7 @@ def process(clicked, img_path):
     # Note: also you should handle the case if the user clicks on the `Process` button without selecting any image file.
 
     global photo
-    global photo2
+    global result_img_photo
     # try to open the path otherwise print an error message that no iage is selected
     try:
         image = Image.open(img_path["path"])
@@ -88,10 +88,10 @@ def process(clicked, img_path):
 
     result_img = Image.open(result_img_path)
     result_img = resize(image=result_img)
-    photo2 = ImageTk.PhotoImage(result_img)
-    result_img_label = Label(root, image=photo2)
-    image_label.place(x=50, y=50)
-    result_img_label.place(x=width+100, y=50)
+    result_img_photo = ImageTk.PhotoImage(result_img)
+    result_img_label = Label(root, image=result_img_photo)
+    image_label.place(x=0, y=50)
+    result_img_label.place(x=width+50, y=50)
     ####### CODE REQUIRED (END) #######
 
     # `main` function definition starts from here.
