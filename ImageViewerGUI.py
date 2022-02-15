@@ -12,11 +12,8 @@ from tkinter import CENTER, Label, Tk, Entry, StringVar, Button, LEFT, ttk, file
 from PIL import Image, ImageTk
 from functools import partial
 from warnings import filterwarnings
-
-from sqlalchemy import true
-
-
 filterwarnings("ignore")
+
 # Define the function you want to call when the filebrowser button is clicked.
 
 
@@ -103,39 +100,39 @@ if __name__ == '__main__':
     # CODE REQUIRED (START) ####### (2 lines)
     # Instantiate the root window.
     # Provide a title to the root window.
-    global root
-    root = Tk()
-    root.title("ImageViewerGUI - Nikhil Saraswat 20CS10039")
-    root.geometry("800x45")
-    root.minsize(width=800, height=45)
+    global root  # declaring a global root window
+    root = Tk()  # initializing the root window
+    root.title("ImageViewerGUI - Nikhil Saraswat 20CS10039")  # title
+    root.geometry("800x45")  # setting geometry of root window
+    root.minsize(width=800, height=45)  # setting minimum size of root window
     ####### CODE REQUIRED (END) #######
 
     # Setting up the segmentor model.
-    annotation_file = './data/annotations.jsonl'
-    transforms = []
+    annotation_file = './data/annotations.jsonl'  # path of annotation_file
+    transforms = []  # transform list
     # Instantiate the segmentor model.
     segmentor = InstanceSegmentationModel()
     # Instantiate the dataset.
     dataset = Dataset(annotation_file, transforms=transforms)
 
     # Declare the options.
-    options = ["Segmentation", "Bounding-box"]
-    clicked = StringVar()
-    clicked.set(options[0])
-    global e
-    e = Entry(root, width=70)
+    options = ["Segmentation", "Bounding-box"]  # options for the dropdown
+    clicked = StringVar()  # declaring a string variable of tkinter
+    clicked.set(options[0])  # giving segmentation as a default option
+    global e  # declaring a global entry variable
+    e = Entry(root, width=70)  # initializing e default width of 70
     e.grid(row=0, column=0)
-    global msg
-    msg = Label(root, text="", justify=CENTER)
-    global image_label
-    image_label = Label(root, image=None)
-    global image_label2
-    result_img_label = Label(root, image=None)
+    global msg  # declaring a global variable for the message
+    msg = Label(root, text="", justify=CENTER)  # labeling the message
+    global image_label  # declaring a global variable for image label
+    image_label = Label(root, image=None)  # labeling the image label
+    global result_img_label  # declaring a global variable for result image label
+    result_img_label = Label(root, image=None)  # labeling result image label
 
     ####### CODE REQUIRED (START) #######
+    img_path = {'path': None}  # creating a dictionary of path as None
     # Declare the file browsing button
-    img_path = {'path': None}
-    selectButton = Button(text='...', command=partial(
+    selectButton = Button(text='. . .', command=partial(
         fileClick, clicked, dataset, segmentor, img_path), padx=5)
     ####### CODE REQUIRED (END) #######
 
@@ -146,8 +143,8 @@ if __name__ == '__main__':
     ####### CODE REQUIRED (END) #######
 
     # This is a `Process` button, check out the sample video to know about its functionality
-    myButton = Button(root, text="Process",
-                      command=partial(process, clicked, img_path), padx=2)
+    myButton = Button(root, text="Process", command=partial(
+        process, clicked, img_path), padx=2)
     selectButton.grid(row=0, column=1)
     clicktypeDropDown.grid(row=0, column=2)
     myButton.grid(row=0, column=3)
