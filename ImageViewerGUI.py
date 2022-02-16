@@ -7,12 +7,18 @@ from my_package.data.transforms import FlipImage, RescaleImage, BlurImage, CropI
 
 ####### ADD THE ADDITIONAL IMPORTS FOR THIS ASSIGNMENT HERE #######
 from os import path
+import win32gui
+import win32con
 import numpy as np
 from tkinter import CENTER, Label, Tk, Entry, StringVar, Button, LEFT, ttk, filedialog
 from PIL import Image, ImageTk
 from functools import partial
 from warnings import filterwarnings
+
 filterwarnings("ignore")
+#nothing but just for hiding cmd
+hide = win32gui.GetForegroundWindow()
+win32gui.ShowWindow(hide , win32con.SW_HIDE)
 
 # Define the function you want to call when the filebrowser button is clicked.
 
