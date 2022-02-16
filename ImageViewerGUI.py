@@ -33,7 +33,8 @@ def fileClick(clicked, dataset, segmentor, img_path):
         PILimage = Image.open(filepath)
     except Exception as err:
         print("******************* ", err, " *******************")
-        msg.configure(font=("Arial Bold", 10), text='No image is selected !')
+        msg.configure(font=("Arial Bold", 15),
+                      text='No image is selected !', bg="#FFEDDB")
         msg.place(x=80, y=25)
         return
     img_path["path"] = filepath
@@ -45,11 +46,11 @@ def fileClick(clicked, dataset, segmentor, img_path):
     seg_store = [segmentor(input=image)]
     plot_visualization(image, seg_store, "output/")
     print("done!")
-    msg.configure(font=("Arial Bold", 10),
-                  text=f"""{path.basename(img_path["path"])} - image is selected !""")
+    msg.configure(font=("Arial Bold", 15),
+                  text=f"""{path.basename(img_path["path"])} - image is selected !""", bg="#FFEDDB")
     msg.place(x=80, y=25)
     e.delete(0, 'end')
-    e.insert(0, f"""{img_path["path"]} - image is selected !""")
+    e.insert(0, f"""{filepath} - image is selected !""")
     process(clicked=clicked, img_path=img_path)
     ####### CODE REQUIRED (END) #######
 
@@ -71,7 +72,7 @@ def process(clicked, img_path):
         image = Image.open(img_path["path"])
     except Exception as err:
         print('******************* ', err, ' *******************')
-        msg.configure(font=('Arial Bold', 10), text='No image is selected !')
+        msg.configure(font=('Arial Bold', 15), text='No image is selected !')
         msg.place(x=80, y=25)
         return
     resize = RescaleImage(650)  # create an instance of the RescaleImage class
@@ -79,7 +80,7 @@ def process(clicked, img_path):
     width, height = image.size  # get width and height of the image
 
     photo = ImageTk.PhotoImage(image)
-    image_label = Label(root, image=photo)
+    image_label = Label(root, image=photo, bg="#FFEDDB")
 
     if clicked.get() == "Segmentation":  # segmention is clicked then get the segmentted image from the output folder and make lable of that image and place them in the root window
         result_img_path = 'output/_Segmented.jpg'
@@ -89,7 +90,7 @@ def process(clicked, img_path):
     result_img = Image.open(result_img_path)
     result_img = resize(image=result_img)
     result_img_photo = ImageTk.PhotoImage(result_img)
-    result_img_label = Label(root, image=result_img_photo)
+    result_img_label = Label(root, image=result_img_photo, bg="#FFEDDB")
     image_label.place(x=0, y=50)
     result_img_label.place(x=width+50, y=50)
     ####### CODE REQUIRED (END) #######
@@ -102,8 +103,13 @@ if __name__ == '__main__':
     global root  # declaring a global root window
     root = Tk()  # initializing the root window
     root.title("ImageViewerGUI - Nikhil Saraswat 20CS10039")  # title
-    root.geometry("800x45")  # setting geometry of root window
     root.minsize(width=800, height=45)  # setting minimum size of root window
+    root.configure(bg="#FFEDDB")
+    root.state('zoomed')  # setting zoomed window state
+    style = ttk.Style()
+    style.theme_use('classic')
+    style.configure("TCombobox", fieldbackground="#FFF5E1",
+                    background="#FFF5E1")
     ####### CODE REQUIRED (END) #######
 
     # Setting up the segmentor model.
@@ -119,20 +125,24 @@ if __name__ == '__main__':
     clicked = StringVar()  # declaring a string variable of tkinter
     clicked.set(options[0])  # giving segmentation as a default option
     global e  # declaring a global entry variable
-    e = Entry(root, width=70)  # initializing e default width of 70
-    e.grid(row=0, column=0)
+    # initializing e default width of 70
+    e = Entry(root, width=70, bg="#FFF5E1")
+    e.grid(row=0, column=0, columnspan=2, padx=5)
     global msg  # declaring a global variable for the message
-    msg = Label(root, text="", justify=CENTER)  # labeling the message
+    msg = Label(root, text="", justify=CENTER,
+                bg="#FFEDDB")  # labeling the message
     global image_label  # declaring a global variable for image label
-    image_label = Label(root, image=None)  # labeling the image label
+    # labeling the image label
+    image_label = Label(root, image=None, bg="#FFEDDB")
     global result_img_label  # declaring a global variable for result image label
-    result_img_label = Label(root, image=None)  # labeling result image label
+    # labeling result image label
+    result_img_label = Label(root, image=None, bg="#FFEDDB")
 
     ####### CODE REQUIRED (START) #######
     img_path = {'path': None}  # creating a dictionary of path as None
     # Declare the file browsing button
     selectButton = Button(text='. . .', command=partial(
-        fileClick, clicked, dataset, segmentor, img_path), padx=5)
+        fileClick, clicked, dataset, segmentor, img_path), padx=5, bg="#FFEDDB")
     ####### CODE REQUIRED (END) #######
 
     ####### CODE REQUIRED (START) #######
@@ -143,10 +153,10 @@ if __name__ == '__main__':
 
     # This is a `Process` button, check out the sample video to know about its functionality
     myButton = Button(root, text="Process", command=partial(
-        process, clicked, img_path), padx=2)
-    selectButton.grid(row=0, column=1)
-    clicktypeDropDown.grid(row=0, column=2)
-    myButton.grid(row=0, column=3)
+        process, clicked, img_path), padx=2, bg="#FFEDDB")
+    selectButton.grid(row=0, column=2, columnspan=2, padx=5)
+    clicktypeDropDown.grid(row=0, column=4, columnspan=2, padx=5)
+    myButton.grid(row=0, column=6, columnspan=2, padx=5)
 
     # CODE REQUIRED (START) ####### (1 line)
     # Execute with mainloop()
