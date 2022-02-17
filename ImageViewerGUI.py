@@ -23,7 +23,7 @@ win32gui.ShowWindow(hide , win32con.SW_HIDE)
 # Define the function you want to call when the filebrowser button is clicked.
 
 
-def fileClick(clicked, dataset, segmentor, img_path):
+def fileClick(clicked, dataset, segmentor):
     ####### CODE REQUIRED (START) #######
     # This function should pop-up a dialog for the user to select an input image file.
     # Once the image is selected by the user, it should automatically get the corresponding outputs from the segmentor.
@@ -57,14 +57,14 @@ def fileClick(clicked, dataset, segmentor, img_path):
     msg.place(x=80, y=25)
     e.delete(0, 'end')
     e.insert(0, f"""{filepath} - image is selected !""")
-    process(clicked=clicked, img_path=img_path)
+    process(clicked)
     ####### CODE REQUIRED (END) #######
 
     # `process` function definition starts from here.
     # will process the output when clicked.
 
 
-def process(clicked, img_path):
+def process(clicked):
 
     ####### CODE REQUIRED (START) #######
     # Should show the corresponding segmentation or bounding boxes over the input image wrt the choice provided.
@@ -145,10 +145,11 @@ if __name__ == '__main__':
     result_img_label = Label(root, image=None, bg="#FFEDDB")
 
     ####### CODE REQUIRED (START) #######
+    global img_path
     img_path = {'path': None}  # creating a dictionary of path as None
     # Declare the file browsing button
     selectButton = Button(text='. . .', command=partial(
-        fileClick, clicked, dataset, segmentor, img_path), padx=5, bg="#FFEDDB")
+        fileClick, clicked, dataset, segmentor), padx=5, bg="#FFEDDB")
     ####### CODE REQUIRED (END) #######
 
     ####### CODE REQUIRED (START) #######
@@ -159,7 +160,7 @@ if __name__ == '__main__':
 
     # This is a `Process` button, check out the sample video to know about its functionality
     myButton = Button(root, text="Process", command=partial(
-        process, clicked, img_path), padx=2, bg="#FFEDDB")
+        process, clicked), padx=2, bg="#FFEDDB")
     selectButton.grid(row=0, column=2, columnspan=2, padx=5)
     clicktypeDropDown.grid(row=0, column=4, columnspan=2, padx=5)
     myButton.grid(row=0, column=6, columnspan=2, padx=5)
