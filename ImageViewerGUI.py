@@ -16,7 +16,7 @@ from functools import partial
 from warnings import filterwarnings
 
 filterwarnings("ignore")
-#nothing but just for hiding cmd
+# nothing but just for hiding cmd
 hide = win32gui.GetForegroundWindow()
 win32gui.ShowWindow(hide , win32con.SW_HIDE)
 
@@ -45,11 +45,15 @@ def fileClick(clicked, dataset, segmentor):
         return
     img_path["path"] = filepath
     my_data = dataset
+    if transforms is not None:
+        for transform_instance in transforms:
+            PILimage = transform_instance.__call__(PILimage)
     # scaling the image between [0,1]
     image = np.array(PILimage)/255
     # rolling the axis of image to bring it from (H,W,3) to (3,H,W)
     image = np.rollaxis(image, 2, 0)
     seg_store = [segmentor(input=image)]
+
     plot_visualization(image, seg_store, "output/")
     print("done!")
     msg.configure(font=("Arial Bold", 15),
@@ -120,7 +124,8 @@ if __name__ == '__main__':
 
     # Setting up the segmentor model.
     annotation_file = './data/annotations.jsonl'  # path of annotation_file
-    transforms = []  # transform list
+    global transforms
+    transforms = [FlipImage('VERTICLE')]  # transform list
     # Instantiate the segmentor model.
     segmentor = InstanceSegmentationModel()
     # Instantiate the dataset.
