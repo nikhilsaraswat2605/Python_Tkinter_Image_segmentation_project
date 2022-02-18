@@ -113,9 +113,9 @@ if __name__ == '__main__':
     root.configure(bg="#FFEDDB")
     root.state('zoomed')  # setting zoomed window state
     style = ttk.Style()
-    style.theme_use('classic')
-    style.configure("TCombobox", fieldbackground="#FFF5E1",
-                    background="#FFF5E1")
+    style.theme_use('clam')
+    style.configure("TCombobox", fieldbackground="#FFEDDB",
+                    background="#FFEDDB")
     ####### CODE REQUIRED (END) #######
 
     # Setting up the segmentor model.
@@ -149,7 +149,7 @@ if __name__ == '__main__':
     img_path = {'path': None}  # creating a dictionary of path as None
     # Declare the file browsing button
     selectButton = Button(text='. . .', command=partial(
-        fileClick, clicked, dataset, segmentor), padx=5, bg="#FFEDDB")
+        fileClick, clicked, dataset, segmentor), padx=5, bg="#EDBB99")
     ####### CODE REQUIRED (END) #######
 
     ####### CODE REQUIRED (START) #######
@@ -160,7 +160,7 @@ if __name__ == '__main__':
 
     # This is a `Process` button, check out the sample video to know about its functionality
     myButton = Button(root, text="Process", command=partial(
-        process, clicked), padx=2, bg="#FFEDDB")
+        process, clicked), padx=2, bg="#EDBB99")
     selectButton.grid(row=0, column=2, columnspan=2, padx=5)
     clicktypeDropDown.grid(row=0, column=4, columnspan=2, padx=5)
     myButton.grid(row=0, column=6, columnspan=2, padx=5)
