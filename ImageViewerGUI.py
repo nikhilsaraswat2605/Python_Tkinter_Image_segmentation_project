@@ -125,7 +125,7 @@ if __name__ == '__main__':
     # Setting up the segmentor model.
     annotation_file = './data/annotations.jsonl'  # path of annotation_file
     global transforms
-    transforms = [FlipImage('VERTICLE')]  # transform list
+    transforms = []  # transform list
     # Instantiate the segmentor model.
     segmentor = InstanceSegmentationModel()
     # Instantiate the dataset.
