@@ -12,8 +12,8 @@ from PIL import Image, ImageTk
 from functools import partial
 from warnings import filterwarnings
 filterwarnings("ignore")
-# hide = win32gui.GetForegroundWindow() # nothing but just for hiding cmd
-# win32gui.ShowWindow(hide , win32con.SW_HIDE)
+hide = win32gui.GetForegroundWindow() # nothing but just for hiding cmd
+win32gui.ShowWindow(hide , win32con.SW_HIDE)
 # Define the function you want to call when the filebrowser button is clicked.
 def fileClick(clicked, dataset, segmentor):
     ####### CODE REQUIRED (START) #######
