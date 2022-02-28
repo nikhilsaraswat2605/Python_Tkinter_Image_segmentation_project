@@ -13,6 +13,6 @@ setup(
     long_description_content_type="markdown",
     packages=['my_package', 'my_package.analysis',
               'my_package.data', 'my_package.data.transforms'],
-    # install_requires=['matplotlib', 'torch',
-    #                   'numpy', 'torchvision', 'opencv-python', 'tk']
+    install_requires=['matplotlib', 'torch',
+                      'numpy', 'torchvision', 'opencv-python', 'tk']
 )
